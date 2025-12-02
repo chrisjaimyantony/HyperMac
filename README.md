@@ -1,6 +1,12 @@
-# HyperMac (Alpha)
+<div align="center">
+  <img src="logo_white.png" width="150" height="150" alt="HyperMac Logo" />
+  <h1>HyperMac (Alpha)</h1>
+  <p>
+    <b>A native, lightweight Tiling Window Manager for macOS, targeting the fluidity of Hyprland.</b>
+  </p>
+</div>
 
-**A native, lightweight Tiling Window Manager for macOS, targeting the fluidity of Hyprland.**
+---
 
 HyperMac aims to bridge the gap between the fluid, physics-based tiling experience of Linux (specifically Hyprland) and the native macOS environment. While other window managers exist, HyperMac focuses specifically on motion, interpolation, and the "feel" of the window management, replacing rigid snapping with organic movement.
 
@@ -104,7 +110,7 @@ We have big plans for Beta v1 and beyond:
 
 Since HyperMac interacts with low-level macOS APIs, it requires specific permissions.
 
-1.  **Build & Run:** Open `HyperMac` in Xcode.
+1.  **Build & Run:** Open `HyperMac.xcodeproj` in Xcode.
 2.  **Run:** Press `Cmd + R` to build and launch the daemon.
 3.  **Grant Permissions:**
     * **Accessibility:** Required to move and resize windows.

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1849FBAE2EDEF9060072F0B8 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1849FBAD2EDEF9060072F0B8 /* logo.png */; };
+		1849FBB02EDEF9D40072F0B8 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1849FBAF2EDEF9D40072F0B8 /* logo_white.png */; };
 		18E9B9F92EDCCD7E00C6E200 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 18E9B9E72EDCCD7E00C6E200 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1849FBAD2EDEF9060072F0B8 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		1849FBAF2EDEF9D40072F0B8 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_white.png; sourceTree = "<group>"; };
 		18BA80A22ED7133800B476FE /* HyperMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HyperMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BA80AF2ED7133C00B476FE /* HyperMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyperMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BA80B92ED7133C00B476FE /* HyperMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyperMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				18E9B9E72EDCCD7E00C6E200 /* README.md */,
+				1849FBAF2EDEF9D40072F0B8 /* logo_white.png */,
+				1849FBAD2EDEF9060072F0B8 /* logo.png */,
 				18BA80A42ED7133800B476FE /* HyperMac */,
 				18BA80B22ED7133C00B476FE /* HyperMacTests */,
 				18BA80BC2ED7133C00B476FE /* HyperMacUITests */,
@@ -219,6 +225,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E9B9F92EDCCD7E00C6E200 /* README.md in Resources */,
+				1849FBB02EDEF9D40072F0B8 /* logo_white.png in Resources */,
+				1849FBAE2EDEF9060072F0B8 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
