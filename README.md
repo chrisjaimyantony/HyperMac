@@ -40,13 +40,7 @@ While the core physics engine is functional, the application lifecycle is curren
     * HyperMac sometimes attempts to tile transient UI elements that report themselves as windows.
     * *Examples:* The "Profile" dropdown in Chrome/Brave, hover-over tab information cards, or "Find" bars in VS Code might be detected as a new window and force the layout engine to split the screen.
 
-2.  **VS Code & Electron Dragging:**
-    * Moving VS Code or Discord between workspaces using the "Throw" command (Option + Shift + Number) is currently unreliable. These apps often do not respond to the standard accessibility drag events, causing them to flicker or stay on the original desktop.
-
-3.  **The "Lone-to-Lone" Transfer:**
-    * Moving a browser from a desktop where it is the *only* window to another desktop where it will *also* be the only window can sometimes fail to trigger a re-tile event. The window moves, but may not snap to full-screen immediately due to stale coordinate reporting.
-
-4.  **Secure Input Pause:**
+2.  **Secure Input Pause:**
     * By design, window management commands are disabled when a password field is focused (a macOS security requirement).
 
 ---
