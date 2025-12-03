@@ -96,7 +96,7 @@ HyperMac uses **Option** as the primary modifier to avoid conflicts with system 
 We have big plans for Beta v1 and beyond:
 
 * [ ] **Visual Borders:** Active window highlighting with customizable colored borders (similar to Hyprland).
-* [ ] **Electron Normalization:** A robust filter to ignore tooltips, dropdowns, and hover cards in browsers and VS Code.
+* [x] **Electron Normalization:** A robust filter to ignore tooltips, dropdowns, and hover cards in browsers and VS Code.
 * [ ] **Mouse-Follows-Focus:** Option to auto-focus windows when the mouse hovers over them.
 * [ ] **Drag-to-Resize:** Ability to resize the Master/Stack split by dragging the gap with the mouse.
 * [ ] **Config File:** A `hypermac.conf` file (dotfile) to customize gaps, speed, and keybinds without recompiling.
