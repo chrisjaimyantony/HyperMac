@@ -2,54 +2,71 @@
 //  StatusBarController.swift
 //  HyperMac
 //
-//  Provides a small menu bar icon with a menu for
-//  reloading layout and quitting the app.
+//  Creates and manages the macOS menu bar status item for HyperMac.
+//  Responsibilities:
+//  - Display a small icon/text in the menu bar
+//  - Provide quick-access menu options (Reload Layout, Quit)
+//  - Bridge user interactions to layout and app lifecycle actions
+//
+//  This class keeps HyperMac visible and accessible even without UI windows.
+//
+//  Created by Chris on 27/11/25.
 //
 
 import Cocoa
 
 class StatusBarController {
 
-    // Reference to the item shown in the macOS menu bar.
+    // The NSStatusItem displayed in the macOS menu bar.
     private var statusItem: NSStatusItem
 
     init() {
 
-        // Create a variable-length menu bar item.
+        // Create a variable-length menu bar item (text or image).
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        // Configure the button (icon) appearance.
+        // Configure the visual appearance of the button.
         if let button = statusItem.button {
-            button.title = "⌘⌃"       // Simple text icon; you can replace with an image.
-            button.toolTip = "HyperMac Tiler"
+            button.title = "⌘⌃"           // Placeholder text icon (replace with image if desired).
+            button.toolTip = "HyperMac"   // Tooltip when hovering.
         }
 
-        // Create the menu that opens when user clicks the icon.
+        // Build the dropdown menu.
         let menu = NSMenu()
 
-        // Menu item: manually re-run layout.
-        menu.addItem(NSMenuItem(title: "Reload Layout",
-                                action: #selector(reloadLayout),
-                                keyEquivalent: "r"))
+        // Option: manually re-run the tiling layout.
+        menu.addItem(
+            NSMenuItem(
+                title: "Reload Layout",
+                action: #selector(reloadLayout),
+                keyEquivalent: "r"
+            )
+        )
 
         // Separator line.
         menu.addItem(NSMenuItem.separator())
 
-        // Menu item: Quit the app.
-        menu.addItem(NSMenuItem(title: "Quit HyperMac",
-                                action: #selector(quit),
-                                keyEquivalent: "q"))
+        // Option: quit the app.
+        menu.addItem(
+            NSMenuItem(
+                title: "Quit HyperMac",
+                action: #selector(quit),
+                keyEquivalent: "q"
+            )
+        )
 
-        // Attach the menu to the status item.
+        // Attach the menu to the menu bar icon.
         statusItem.menu = menu
     }
 
-    // Called when user clicks "Reload Layout".
+    // MARK: - Menu Actions
+
+    // User pressed “Reload Layout”
     @objc private func reloadLayout() {
         LayoutEngine.shared.applyLayout()
     }
 
-    // Called when user clicks "Quit HyperMac".
+    // User pressed “Quit HyperMac”
     @objc private func quit() {
         NSApp.terminate(nil)
     }

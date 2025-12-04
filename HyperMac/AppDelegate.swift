@@ -2,52 +2,67 @@
 //  AppDelegate.swift
 //  HyperMac
 //
+//  Entry point for the HyperMac application.
+//  This file is responsible for:
+//  - Setting the macOS app activation policy (no Dock icon)
+//  - Initializing core managers (layout, hotkeys, window discovery, AX)
+//  - Ensuring Accessibility permissions are granted before running
+//  - Starting the window scanning loop
+//  - Handling cleanup on termination
+//
 //  Created by Chris on 27/11/25.
 //
 
-import Cocoa  // AppKit APIs for macOS apps
+import Cocoa // AppKit APIs for macOS apps
 
-class AppDelegate: NSObject, NSApplicationDelegate{
+class AppDelegate: NSObject, NSApplicationDelegate {
 
-    // Holds the menu bar controller
+    // Menu bar controller (status item at top-right)
     private var statusBarController: StatusBarController?
 
-    // Core Managers
+    // Core manager singletons
     let accessibilityManager = AccessibilityManager()
     let windowDiscovery = WindowDiscovery.shared
     let layoutEngine = LayoutEngine.shared
     let hotkeyManager = HotkeyManager.shared
     let axController = AXWindowController.shared
 
-    // Called when app finishes launching
-    func applicationDidFinishLaunching(_ notification: Notification){
+    // Called when the application has finished launching
+    func applicationDidFinishLaunching(_ notification: Notification) {
 
-        // Make app run as accessory, No Dock icon and no app switcher entry
+        // Run as an accessory app:
+        // - No Dock icon
+        // - No entry in Cmd+Tab
         NSApp.setActivationPolicy(.accessory)
 
-        // Create the menu bar icon (top right of macOS)
+        // Create the menu bar icon and menu
         statusBarController = StatusBarController()
 
-        // Ask user to grant Accessibility permissions if not already
+        // Request (or verify) Accessibility permissions.
         accessibilityManager.ensureAccessibilityPermissions()
 
-        // Only start scanning once Accessibility is trusted
+        // Only begin scanning and managing windows once permissions are granted.
         accessibilityManager.whenTrusted { [weak self] in
-            guard let self else { return }
+            guard let self = self else { return }
+
+            // When window list changes, update layout engine
             self.windowDiscovery.onWindowsChanged = { windows in
                 self.layoutEngine.updateWindows(windows)
                 self.layoutEngine.applyLayout()
             }
+
+            // Start watching for windows
             self.windowDiscovery.start()
         }
 
-        // Listen for hotkeys
+        // Start global hotkey listener
         hotkeyManager.startListening()
     }
 
-    // Called when an app is quitting
-    func applicationWillTerminate(_ notification: Notification){
-        // Stop timers and taps to clean up
+    // Called when the app is about to quit
+    func applicationWillTerminate(_ notification: Notification) {
+
+        // Stop scanning and remove event taps
         windowDiscovery.stop()
         hotkeyManager.stopListening()
     }
