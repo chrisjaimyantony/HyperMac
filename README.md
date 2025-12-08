@@ -47,17 +47,17 @@ While the core physics engine is functional, the application lifecycle is curren
 *Focus: Stability, physics tuning, tiling correctness, and core UX.*
 
 #### ✔️ v0.1–v0.2 Achievements
-- [x] ~~Master-Stack Layout Engine
-- [x] ~~Zombie Memory Protection (Prevents layout break on Electron flickers)
-- [x] ~~Long-Term Window History (Persistent Rank across spaces)
-- [x] ~~Thread-Optimized Animator (Off-Main-Thread logic)
-- [x] ~~Smart Backpressure (60Hz "Active Frame Dropping")
-- [x] ~~Precision Window Throwing (Pixel-perfect grip logic)
-- [x] ~~Atomic Updates (Size/Pos synchronization to prevent tearing)
-- [x] ~~Burst Scanning (Reliable discovery on space change)
-- [x] ~~Idle CPU Guarantee (0–1% usage at rest)
-- [x] ~~Menu Bar Controls (Reload, Quit)
-- [x] ~~Electron Normalization (Tier 1: Ignore tooltips, popups, hover cards)
+- [x] ~~Master-Stack Layout Engine~~
+- [x] ~~Zombie Memory Protection (Prevents layout break on Electron flickers)~~
+- [x] ~~Long-Term Window History (Persistent Rank across spaces)~~
+- [x] ~~Thread-Optimized Animator (Off-Main-Thread logic)~~
+- [x] ~~Smart Backpressure (60Hz "Active Frame Dropping")~~
+- [x] ~~Precision Window Throwing (Pixel-perfect grip logic)~~
+- [x] ~~Atomic Updates (Size/Pos synchronization to prevent tearing)~~
+- [x] ~~Burst Scanning (Reliable discovery on space change)~~
+- [x] ~~Idle CPU Guarantee (0–1% usage at rest)~~
+- [x] ~~Menu Bar Controls (Reload, Quit)~~
+- [x] ~~Electron Normalization (Tier 1: Ignore tooltips, popups, hover cards)~~
 
 #### v0.3-alpha (The Interaction Build)
 - [ ] Mouse-Follows-Focus (optional)
