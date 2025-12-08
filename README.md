@@ -17,31 +17,16 @@ I am currently the sole developer working on this project, and I am learning Swi
 
 ---
 
-## Current State & Lifecycle Management
+## Current State & Limitations
 
-**HyperMac is currently in early Alpha.**
+**HyperMac is currently in early Alpha (v0.2).**
 
 While the core physics engine is functional, the application lifecycle is currently tied to the development environment.
 
-* **Menu Bar / Dock:** You may see a menu bar icon, but the "Quit" and "Reload" buttons are currently experimental and may not reliably terminate the process.
-* **To Start/Restart:** Run the project directly from Xcode using **Cmd + R**.
-* **To Quit:** Stop the process in Xcode or press **Ctrl + C** in the debug console.
-
----
-
-## Compatibility & Limitations
-
-* **Native Apps (Stable):** Applications built specifically for macOS (Xcode, Notes, Safari, Finder, Calendar) have a high guarantee of stability. They respect accessibility APIs correctly and tile perfectly.
-* **Electron/Custom Apps (Experimental):** Apps that draw their own windows (VS Code, Brave, Chrome, Discord, Spotify) are currently "Hit or Miss." We are actively working on normalization layers to make them behave like native apps.
-
-### Known Issues
-
-1.  **Ghost Windows & Popups:**
-    * HyperMac sometimes attempts to tile transient UI elements that report themselves as windows.
-    * *Examples:* The "Profile" dropdown in Chrome/Brave, hover-over tab information cards, or "Find" bars in VS Code might be detected as a new window and force the layout engine to split the screen.
-
-2.  **Secure Input Pause:**
-    * By design, window management commands are disabled when a password field is focused (a macOS security requirement).
+* **Lifecycle:** Run the project directly from Xcode (`Cmd + R`). To quit, stop the process in Xcode, press `Ctrl + C` in the debug console or press quit through HyperMac icon in the status bar.
+* **Compatibility:**
+    * **Native Apps (Stable):** Apps like Xcode, Safari, and Terminal tile perfectly.
+    * **Electron Apps (Experimental):** Apps like VS Code, Discord, or Spotify may behave unpredictably. We are actively working on normalization layers to handle their non-standard window behaviors.
 
 ---
 
@@ -49,13 +34,88 @@ While the core physics engine is functional, the application lifecycle is curren
 
 * **Native Swift Performance:** Zero CPU usage when idle. Uses advanced State Diffing to only calculate layout changes when necessary.
 * **Smart Master-Stack Layout:** Automatically promotes your main window to the left (Master) and stacks secondary windows on the right.
-* **Xcode Safety Valve:** Includes "Look-Ahead Balancing" to prevent heavy apps like Xcode from being squished or pushing other windows off-screen. It guarantees zero overlap.
-* **Physics Engine:** Custom EaseOutExpo animation curves running at 60FPS for smooth, jitter-free window movements.
-* **Workspace Integration:** Bridges with native macOS Mission Control spaces using AppleScript injection.
+* **Long-Term Memory:** Unlike basic tilers, HyperMac remembers the exact order of your windows. If you switch spaces and come back, your windows will be exactly where you left them.
+* **Physics Engine:** Custom **Quartic Ease-Out** animation curves running at 60FPS for smooth, jitter-free window movements.
+* **60Hz Optimization:** Implements "Active Frame Dropping." If the macOS WindowServer is busy, HyperMac intelligently skips animation frames to prevent UI freeze and input lag.
+* **Workspace Integration:** Bridges with native macOS Mission Control spaces using low-level event injection.
 
 ---
 
-## Keybinds
+## Roadmap & Progress
+
+### Alpha Series (0.x)
+*Focus: Stability, physics tuning, tiling correctness, and core UX.*
+
+#### ✔️ v0.1–v0.2 Achievements
+- [x] ~~Master-Stack Layout Engine
+- [x] ~~Zombie Memory Protection (Prevents layout break on Electron flickers)
+- [x] ~~Long-Term Window History (Persistent Rank across spaces)
+- [x] ~~Thread-Optimized Animator (Off-Main-Thread logic)
+- [x] ~~Smart Backpressure (60Hz "Active Frame Dropping")
+- [x] ~~Precision Window Throwing (Pixel-perfect grip logic)
+- [x] ~~Atomic Updates (Size/Pos synchronization to prevent tearing)
+- [x] ~~Burst Scanning (Reliable discovery on space change)
+- [x] ~~Idle CPU Guarantee (0–1% usage at rest)
+- [x] ~~Menu Bar Controls (Reload, Quit)
+- [x] ~~Electron Normalization (Tier 1: Ignore tooltips, popups, hover cards)
+
+#### v0.3-alpha (The Interaction Build)
+- [ ] Mouse-Follows-Focus (optional)
+- [ ] Drag-to-Resize (adjust Master/Stack ratio interactively)
+- [ ] Snap Back Feature (return manually dragged windows to layout)
+- [ ] Transient Window Handling (Spotlight, Raycast, Alfred, etc.)
+- [ ] Floating Window Guard (auto-ignore dialogs, preferences)
+- [ ] Logger Integration (`os_log` instead of `print()`)
+
+---
+
+### Beta Series (1.x)
+*Focus: customization, multi-layout tiling, repeatable configs.*
+
+#### v1.0-beta
+- [ ] Visual Borders (active window highlighting, color themes)
+- [ ] Config File (`config.hypermac`) for layouts, gaps, animations, borders, keybinds
+- [ ] Window Rules (regex-based float/assign/ignore)
+- [ ] **Layout Switching:** user-selectable tiling modes:
+  - [x]**Master-Stack**
+  - **BSP (Binary Space Partitioning)**
+  - **Monocle (Fullscreen Tiling)**
+
+#### v1.1-beta
+- [ ] Multi-Monitor Support (hot-plug detection + recovery)
+- [ ] Cross-Display Throwing (send window to another monitor)
+- [ ] Per-Monitor Layouts (each display uses its own scheme)
+- [ ] Per-Workspace Profiles (workspace-specific templates)
+
+---
+
+### Production (2.x)
+*Focus: polish, UI, distribution, ecosystem.*
+
+#### v2.0
+- [ ] Full Standalone App (.dmg, signed & notarized)
+- [ ] Settings UI (native preferences)
+- [ ] Auto-Updater (Sparkle)
+- [ ] Plugin Hooks (custom borders, layouts, rules)
+- [ ] Telemetry (opt-in crash + debugging info)
+
+#### v2.1
+- [ ] iCloud Sync for configs + layouts
+- [ ] Preset Library (community layout themes)
+- [ ] Rule & Template Exchange (import/export)
+- [ ] Profile Switching (IDE Mode, Browser Mode, Media Mode)
+
+---
+
+### Future / Experimental
+- [ ] Predictive Tiling (use heuristics to order windows)
+- [ ] Gesture-Controlled Layout Switching
+- [ ] AI-Assisted Rule Suggestions
+- [ ] Layout Plugin Marketplace
+
+---
+
+## ⌨️ Keybinds
 
 HyperMac uses **Option** as the primary modifier to avoid conflicts with system shortcuts.
 
@@ -80,23 +140,8 @@ HyperMac uses **Option** as the primary modifier to avoid conflicts with system 
 ### System
 | Keybind | Action | Description |
 | :--- | :--- | :--- |
-| **Option + Shift + R** | Reload Layout | Forces a re-calculation of the grid (useful if you resize manually). |
-| **Option + Shift + Q** | Quit HyperMac | Closes the window manager (Experimental). |
-
----
-
-## Roadmap
-
-We have big plans for Beta v1 and beyond:
-
-* [ ] **Visual Borders:** Active window highlighting with customizable colored borders (similar to Hyprland).
-* [x] **Electron Normalization:** A robust filter to ignore tooltips, dropdowns, and hover cards in browsers and VS Code.
-* [ ] **Mouse-Follows-Focus:** Option to auto-focus windows when the mouse hovers over them.
-* [ ] **Drag-to-Resize:** Ability to resize the Master/Stack split by dragging the gap with the mouse.
-* [ ] **Config File:** A `hypermac.conf` file (dotfile) to customize gaps, speed, and keybinds without recompiling.
-* [ ] **Window Rules:** Define specific rules per app (e.g., "Always float Calculator", "Always open Spotify on Workspace 4").
-* [ ] **Multi-Monitor Support:** Logic to handle moving windows across different physical displays.
-* [ ] **Layout Switching:** Keybinds to toggle between Master-Stack, BSP (Binary Space Partitioning), and Monocle (Full Screen) layouts on the fly.
+| **Option + Shift + R** | Reload Layout | Forces a re-calculation of the grid. |
+| **Option + Shift + Q** | Quit HyperMac | Closes the window manager. |
 
 ---
 
@@ -109,11 +154,11 @@ Since HyperMac interacts with low-level macOS APIs, it requires specific permiss
 3.  **Grant Permissions:**
     * **Accessibility:** Required to move and resize windows.
     * **Automation (AppleScript):** Required to switch desktops reliably.
-    * **Screen Recording:** Required to read window titles for correct identification (we do not record the screen, but Apple groups the permissions together).
+    * **Screen Recording:** Required to read window titles (we do not record the screen, but Apple groups the permissions together).
 4.  **Enable Mission Control Shortcuts:**
     * Go to **System Settings > Keyboard > Keyboard Shortcuts > Mission Control**.
     * Expand the list and **Enable** "Switch to Desktop 1", "Switch to Desktop 2", etc.
-    * Ensure they are mapped to `^1`, `^2` (Control+Number).
+    * Ensure they are mapped to `^1`, `^2` till 4 (Control+Number).
 
 ## License
 

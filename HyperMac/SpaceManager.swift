@@ -144,7 +144,7 @@ class SpaceManager {
         //----------------------------
         
         let originalMousePos = CGEvent(source: nil)?.location ?? .zero
-        let gripPoint = CGPoint(x: newFrame.midX + 360, y: newFrame.minY + 15)
+        let gripPoint = CGPoint(x: newFrame.minX + 9, y: newFrame.minY + 15)
         
         DispatchQueue.global(qos: .userInteractive).async {
             
@@ -157,8 +157,8 @@ class SpaceManager {
             usleep(100000)
 
             // Drag rightwards to ensure window enters "drag state".
-            let dragDistance: CGFloat = 80.0
-            let steps = 8
+            let dragDistance: CGFloat = 50
+            let steps = 5
             
             for i in 1...steps {
                 let currX = gripPoint.x + (dragDistance / CGFloat(steps) * CGFloat(i))

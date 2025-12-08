@@ -2,11 +2,9 @@
 //  HyperMacApp.swift
 //  HyperMac
 //
-//  SwiftUI entry point for the HyperMac application.
-//  This struct wires the SwiftUI lifecycle into the older NSApplication
-//  lifecycle by attaching an AppDelegate. HyperMac does not present any
-//  traditional UI windows, so the main scene hosts only an empty Settings
-//  window to satisfy SwiftUI's requirements.
+//  This is the starting point of the application.
+//  Because we are building a system utility (Window Manager) and not a
+//  standard app with windows, we need to bypass some default SwiftUI behaviors.
 //
 //  Created by Chris on 26/11/25.
 //
@@ -16,15 +14,16 @@ import SwiftUI
 @main
 struct HyperMacApp: App {
 
-    // Bridge SwiftUI lifecycle → AppKit lifecycle.
-    // This allows AppDelegate to manage Accessibility, window scanning,
-    // menu bar icon, hotkeys, and layout engine initialization.
+    // This connects the modern SwiftUI lifecycle to the older AppKit lifecycle.
+    // We need AppKit (AppDelegate) because it handles the low-level system events,
+    // menu bar icons, and accessibility permissions better than SwiftUI does.
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
 
-        // Since HyperMac does not use any visible UI windows,
-        // we declare only a minimal Settings scene that stays hidden.
+        // HyperMac runs in the background and does not have a main window.
+        // However, SwiftUI requires us to return at least one "Scene".
+        // We return a "Settings" scene with an EmptyView so nothing appears on screen.
         Settings {
             EmptyView()
         }
